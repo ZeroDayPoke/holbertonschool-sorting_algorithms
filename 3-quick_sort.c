@@ -16,32 +16,37 @@ void swpints(int *num1, int *num2)
 }
 
 /**
- * partition - Lomuto partition scheme
+ * l_partition - Lomuto partition scheme
  * @arr: integer array to sort
  * @size: size of the array
  * @high: high value
  * @low: low value
  * Return: void
  */
-int partition(int arr[], int low, int high, size_t size)
+int l_partition(int arr[], int low, int high, size_t size)
 {
-	int pivot;
-	int i;
+	int *pivot;
+	int i, j;
 
-	i = (low - 1);
-	pivot = arr[high];
-	for (int j = low; j <= (high - 1); j++)
+	pivot = &arr[high];
+	for (i = j = low; j < high; j++)
 	{
-		if (arr[j] <= pivot)
+		if (arr[j] < *pivot)
 		{
+			if (i < j)
+			{
+				swpints(&arr[i], &arr[j]);
+				print_array(arr, size);
+			}
 			i++;
-			swpints(&arr[i], &arr[j]);
-			print_array(arr, size);
 		}
 	}
-	swpints(&arr[i + 1], &arr[high]);
-	print_array(arr, size);
-	return (i + 1);
+	if (arr[i] > *pivot)
+	{
+		swpints(&arr[i], pivot);
+		print_array(arr, size);
+	}
+	return (i);
 }
 
 /**
@@ -56,25 +61,25 @@ void quick_sort(int *array, size_t size)
 
 	if (!array || size < 2)
 		return;
-	cycler(array, size, x, y);
+	l_cycler(array, size, x, y);
 }
 
 /**
- * cycler - recursive cycler for qsort algo
+ * l_cycler - recursive cycler for qsort algo
  * @array: integer array to sort
  * @size: size of the array
  * @x: starting value
  * @y: secondary value
  * Return: void
  */
-void cycler(int *array, size_t size, int x, int y)
+void l_cycler(int *array, size_t size, int x, int y)
 {
 	int p;
 
 	if ((y - x) > 0)
 	{
-		p = partition(array, x, y, size);
-		cycler(array, size, x, (p - 1));
-		cycler(array, size, (p + 1), y);
+		p = l_partition(array, x, y, size);
+		l_cycler(array, size, x, (p - 1));
+		l_cycler(array, size, (p + 1), y);
 	}
 }

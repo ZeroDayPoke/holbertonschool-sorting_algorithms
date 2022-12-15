@@ -40,6 +40,7 @@ void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);
 void quick_sort(int *array, size_t size);
 void swpints(int *num1, int *num2);
-void cycler(int *array, size_t size, int x, int y);
+void l_cycler(int *array, size_t size, int x, int y);
+int l_partition(int arr[], int low, int high, size_t size);
 
 #endif
